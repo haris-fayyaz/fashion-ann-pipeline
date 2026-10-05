@@ -30,7 +30,7 @@ def main():
         x_test=x_test, y_test=raw["y_test"],
     )
     print(f"train {x_train.shape}, val {x_val.shape}, test {x_test.shape}")
-    print(f"pixel range: {x_train.min()} to {x_train.max()}")
+    print(f"pixel range: {x_train.min():.1f} to {x_train.max():.1f}")
 
 
 if __name__ == "__main__":
