@@ -1,8 +1,16 @@
+from locale import normalize
 import os
 import numpy as np
 import yaml
 from sklearn.model_selection import train_test_split
 
+
+MEAN, STD = 0.286, 0.353
+
+
+def normalize(x):
+    # scale to [0, 1], then standardize with Fashion-MNIST mean and std
+    return (x.astype("float32") / 255.0 - MEAN) / STD
 
 def main():
     with open("params.yaml") as f:
@@ -11,8 +19,8 @@ def main():
     raw = np.load("data/raw/fashion_mnist.npz")
     y_train_full = raw["y_train"]
 
-    x_train_full = (raw["x_train"].astype("float32") / 255.0 - 0.286) / 0.353
-    x_test = (raw["x_test"].astype("float32") / 255.0 - 0.286) / 0.353
+    x_train_full = normalize(raw["x_train"])
+    x_test = normalize(raw["x_test"])
 
     x_train, x_val, y_train, y_val = train_test_split(
         x_train_full,
